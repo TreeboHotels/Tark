@@ -1,0 +1,7 @@
+app_id: SampleApp
+db_name: tark
+db_node: localhost
+db_password: treebo
+db_type: postgresql
+db_user: treebo
+import_paths: .
