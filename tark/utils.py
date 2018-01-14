@@ -1,5 +1,7 @@
 import json
+import string
 import sys
+import random
 
 
 def get_filtered_keys(key_list, payload):
@@ -50,3 +52,10 @@ def update_import_paths(import_paths):
     """
     if import_paths:
         sys.path = import_paths.split(':') + sys.path
+
+
+def generate_unique_id(size=5):
+    return ''.join(random.choice(string.digits) for _ in range(size))
+
+
+

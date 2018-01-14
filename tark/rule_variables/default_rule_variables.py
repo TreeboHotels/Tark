@@ -1,50 +1,88 @@
 from datetime import datetime
 
 from tark import constants
-from tark.rule_variables.base_rule_variable import BaseRuleVariable
+from tark.rule_variables.base_rule_variable import BaseRuleVariableType
 
 
-class IntRuleVariable(BaseRuleVariable):
+class LabeledInt(BaseRuleVariableType):
 
-    def __init__(self, argument_list):
-        if not argument_list or not argument_list.get("value"):
-            raise KeyError("unable to find key value in argument list: ".format(argument_list))
-        self.value = int(argument_list.get("value"))
+    NAME = 'labeled_int'
 
-    def get_value(self):
-        return self.value
-
-
-class FloatRuleVariable(BaseRuleVariable):
-
-    def __init__(self, argument_list):
-        if not argument_list or not argument_list.get("value"):
-            raise KeyError("unable to find key value in argument list: ".format(argument_list))
-        self.value = float(argument_list.get("value"))
+    def __init__(self, args, variables):
+        self.value = int(variables.get(args))
 
     def get_value(self):
         return self.value
 
 
-class StringRuleVariable(BaseRuleVariable):
+class LabeledFloat(BaseRuleVariableType):
 
-    def __init__(self, argument_list):
-        if not argument_list or not argument_list.get("value"):
-            raise KeyError("unable to find key value in argument list: ".format(argument_list))
-        self.value = str(argument_list.get("value"))
+    NAME = 'labeled_float'
+
+    def __init__(self, args, variables):
+        self.value = float(variables.get(args))
 
     def get_value(self):
         return self.value
 
 
-class NoOfDaysRuleVariable(BaseRuleVariable):
+class LabeledString(BaseRuleVariableType):
 
-    def __init__(self, argument_list):
-        if not argument_list or not argument_list.get("start_date") or not argument_list.get("end_date"):
-            raise KeyError("unable to find key start_date or end_date in argument list: ".format(argument_list))
+    NAME = 'labeled_string'
 
-        self.start_date = datetime.strptime(argument_list.get("start_date"), constants.DATETIME_FORMAT_STRING)
-        self.end_date = datetime.strptime(argument_list.get("end_date"), constants.DATETIME_FORMAT_STRING)
+    def __init__(self, args, variables):
+        self.value = str(variables.get(args))
+
+    def get_value(self):
+        return self.value
+
+
+class ConstInt(BaseRuleVariableType):
+
+    NAME = 'const_int'
+
+    def __init__(self, args, variables):
+        self.value = int(args)
+
+    def get_value(self):
+        return self.value
+
+
+class ConstFloat(BaseRuleVariableType):
+
+    NAME = 'const_float'
+
+    def __init__(self, args, variables):
+        self.value = float(args)
+
+    def get_value(self):
+        return self.value
+
+
+class ConstString(BaseRuleVariableType):
+
+    NAME = 'const_string'
+
+    def __init__(self, args, variables):
+        self.value = str(args)
+
+    def get_value(self):
+        return self.value
+
+
+class NoOfDays(BaseRuleVariableType):
+
+    NAME = 'no_of_days'
+
+    def __init__(self, args, variables):
+
+        keys = args.split(",")
+
+        start = keys[0]
+        end = keys[1]
+
+        self.start_date = datetime.strptime(variables.get(start), constants.DATETIME_FORMAT_STRING)
+        self.end_date = datetime.strptime(variables.get(end), constants.DATETIME_FORMAT_STRING)
 
         delta = self.end_date - self.start_date
         self.value = delta.days

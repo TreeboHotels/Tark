@@ -1,7 +1,7 @@
 from abc import abstractmethod
 
 
-class BaseRuleVariable(object):
+class BaseRuleVariableType(object):
 
     @abstractmethod
     def get_value(self):

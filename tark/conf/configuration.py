@@ -3,8 +3,10 @@
 import logging
 import traceback
 
-from tark import constants
 import yaml
+
+from tark import constants
+from tark.conf.db_settings import DBSettings
 from tark.utils import update_import_paths
 
 
@@ -37,15 +39,13 @@ class Configuration(object):
         # now load any run time config change done
         self.set_config(**kwargs)
 
+        self.db = None
+
     def load_with_defaults(self):
         self.app_id = constants.DEFAULT_APP_ID
-        self.db_type = constants.DEFAULT_DB_TYPE
-        self.db_name = constants.DEFAULT_DB_NAME
-        self.db_user = constants.DEFAULT_DB_USER
-        self.db_password = constants.DEFAULT_DB_PASSWORD
-        self.db_node = constants.DEFAULT_DB_NODE
         self.import_paths = constants.DEFAULT_IMPORT_PATHS
         self.config_file = constants.DEFAULT_CONFIG_FILE_PATH
+        self.db_setting = DBSettings()
         update_import_paths(self.import_paths)
 
     def set_config(self, **kwargs):
@@ -64,20 +64,8 @@ class Configuration(object):
         if 'config_file' in kwargs:
             self.config_file = kwargs['config_file']
 
-        if 'db_type' in kwargs:
-            self.db_type = kwargs['db_type']
-
-        if 'db_name' in kwargs:
-            self.db_name = kwargs['db_name']
-
-        if 'db_user' in kwargs:
-            self.db_user = kwargs['db_user']
-
-        if 'db_password' in kwargs:
-            self.db_password = kwargs['db_password']
-
-        if 'db_node' in kwargs:
-            self.db_node = kwargs['db_node']
+        if 'db_settings' in kwargs:
+            self.db_settings = DBSettings(kwargs['db_settings'])
 
     def load_from_file(self, file_path):
         logger = logging.getLogger(self.__class__.__name__)
@@ -96,11 +84,7 @@ class Configuration(object):
         conf_dict = {
             "app_id": self.app_id,
             "import_paths": self.import_paths,
-            "db_type": self.db_type,
-            "db_name": self.db_name,
-            "db_user": self.db_user,
-            "db_password": self.db_password,
-            "db_node": self.db_node,
+            "db_settings": self.db_setting.get_settings(),
         }
 
         try:

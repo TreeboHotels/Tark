@@ -2,41 +2,65 @@
 from tark.operators.base_operator import BaseOperator
 
 
-class EqualOperator(BaseOperator):
+class Equal(BaseOperator):
 
-    operator_type = "EQUAL"
+    NAME = "equal"
 
     def operate(self, operand_one, operand_two):
         return operand_one.get_value() == operand_two.get_value()
 
 
-class GreaterThanOperator(BaseOperator):
+class NotEqual(BaseOperator):
 
-    operator_type = "GREATER_THAN"
+    NAME = "not_equal"
+
+    def operate(self, operand_one, operand_two):
+        return operand_one.get_value() != operand_two.get_value()
+
+
+class GreaterThan(BaseOperator):
+
+    NAME = "greater_than"
 
     def operate(self, operand_one, operand_two):
         return operand_one.get_value > operand_two.get_value()
 
 
-class LessThanOperator(BaseOperator):
+class LessThan(BaseOperator):
 
-    operator_type = "LESS_THAN"
+    NAME = "less_than"
 
     def operate(self, operand_one, operand_two):
         return operand_one.get_value() < operand_two.get_value()
 
 
-class GreaterThanEqualOperator(BaseOperator):
+class GreaterThanEqual(BaseOperator):
 
-    operator_type = "GREATER_THAN_EQUAL"
+    NAME = "greater_than_equal"
 
     def operate(self, operand_one, operand_two):
         return operand_one.get_value() >= operand_two.get_value()
 
 
-class LessThanEqualOperator(BaseOperator):
+class LessThanEqual(BaseOperator):
 
-    operator_type = "LESS_THAN_EQUAL"
+    NAME = "less_than_equal"
 
     def operate(self, operand_one, operand_two):
         return operand_one.get_value() <= operand_two.get_value()
+
+
+class And(BaseOperator):
+
+    NAME = "and"
+
+    def operate(self, operand_one, operand_two):
+        return operand_one and operand_two
+
+
+class Or(BaseOperator):
+
+    NAME = "or"
+
+    def operate(self, operand_one, operand_two):
+        return operand_one or operand_two
