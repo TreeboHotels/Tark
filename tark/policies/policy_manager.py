@@ -2,7 +2,8 @@ import logging
 
 from tark import constants
 from tark import utils
-from tark.entities.models import policy, policy_group, rule, rule_variable
+from tark.entities.models import policy, policy_group
+from tark import exception
 
 
 logger = logging.getLogger(constants.TARK_LOGGER_PREFIX + __name__)
@@ -55,11 +56,53 @@ class PolicyManager(object):
         return policy.Policy.create(**policy_dict)
 
     @classmethod
+    def get_policy(cls, name=None, policy_id=None):
+
+        if name is None and policy_id is None:
+            KeyError("get_policy:bBoth name and policy id cannot be none")
+
+        filters = dict()
+
+        if name:
+            filters["name"] = name
+
+        if policy_id:
+            filters["policy_id"] = policy_id
+
+        policy_obj = policy.Policy.get(**filters)
+
+        if not policy_obj:
+            raise exception.ResourceNotFound(policy.Policy.__name__, name)
+
+        return policy_obj
+
+    @classmethod
     def create_policy_group(cls, name, domain, description, rule_equation=None):
         #TODO: Add validation
         return policy_group.PolicyGroup.create(name=name,
                                                domain=domain,
                                                description=description,
                                                rule_equation=rule_equation)
+
+    @classmethod
+    def get_policy_group(cls, name=None, policy_id=None):
+
+        if name is None and policy_id is None:
+            KeyError("get_policy:bBoth name and policy id cannot be none")
+
+        filters = dict()
+
+        if name:
+            filters["name"] = name
+
+        if policy_id:
+            filters["policy_id"] = policy_id
+
+        policy_obj = policy.Policy.get(**filters)
+
+        if not policy_obj:
+            raise exception.ResourceNotFound(policy.Policy.__name__, name)
+
+        return policy_obj
 
 

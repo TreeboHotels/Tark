@@ -45,6 +45,10 @@ class PolicyEngine(object):
 
         filtered_policy_groups = cls.filter_policy_groups(filters, domain)
 
+        if len(filtered_policy_groups) <= 0:
+            logger.error("No policy group found for for filter: {}".format(filters))
+            return None
+
         for pg in filtered_policy_groups:
             for policy_obj in pg.policies:
                 if policy_obj.match(filters):

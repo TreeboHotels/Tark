@@ -40,7 +40,7 @@ class OperatorManager(object):
         if not operator:
             raise KeyError("No operator found for given name: {}".format(name))
 
-        return operator
+        return operator()
 
     @classmethod
     def get_logic_operator(cls, name):
@@ -58,4 +58,4 @@ class OperatorManager(object):
         if not operator:
             raise KeyError("No operator found for given name: {}".format(name))
 
-        return operator
+        return operator()

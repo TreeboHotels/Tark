@@ -1,19 +1,22 @@
 
 from tark.entities.models import rule
 from tark.operators import operator_manager
-from tark.rule_core import complex_rule
+from tark.rules import complex_rule
 
 
 class EquationBuilder(object):
 
-    def __init__(self, rule_map=None):
-        if rule_map is None:
-            rule_map = dict()
+    def __init__(self, rule_mappings=None):
+        rule_map = dict()
+        if rule_map is not None:
+            for rule_map_entry in rule_mappings:
+                rule_obj = rule_map_entry.rule
+                rule_map[rule_obj.name] = rule_obj
 
         self.rule_map = rule_map
 
     def build_equation(self, equation_dict):
-        self.final_rule = self.get_rule_entity_from_dict(equation_dict)
+        return self.get_rule_entity_from_dict(equation_dict)
 
     def get_rule_entity_from_dict(self, dict_obj):
 

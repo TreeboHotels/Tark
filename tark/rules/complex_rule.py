@@ -7,7 +7,7 @@ class ComplexRule(object):
         self.operator = operator
 
     def match(self, filters):
-        return self.operator(self.lhs.match(filters), self.rhs.match(filters))
+        return self.operator.operate(self.lhs.match(filters), self.rhs.match(filters))
 
     @property
     def dict(self):

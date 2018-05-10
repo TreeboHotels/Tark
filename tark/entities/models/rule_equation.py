@@ -3,7 +3,7 @@ import json
 from peewee import DateTimeField, CharField, TextField, ForeignKeyField
 
 from tark.entities.models import base, rule
-from tark.rule_core import equation_builder
+from tark.rules import equation_builder
 
 
 class RuleEquation(base.TimestampedModel):

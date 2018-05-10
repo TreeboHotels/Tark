@@ -2,9 +2,9 @@ import json
 
 from peewee import DateTimeField, CharField, TextField, IntegerField, ForeignKeyField, BooleanField
 
-from tark.entities.models import base, action, policy_group, rule_equation
-from tark.engine import policy_manager
 from tark.actions import action_manager
+from tark.entities.models import base, action, policy_group, rule_equation
+from tark.policies import policy_manager
 
 
 class PolicyArchive(base.TimestampedModel):
@@ -23,6 +23,12 @@ class PolicyArchive(base.TimestampedModel):
     policy_group = ForeignKeyField(policy_group.PolicyGroup, null=True, related_name='policy_archives')
     rule_equation = ForeignKeyField(rule_equation.RuleEquation)
 
+    class Meta:
+        indexes = (
+            # only one major version of a policy can be present at once.
+            (('policy_id', 'version_major'), True),
+        )
+
 
 class Policy(base.TimestampedModel):
     created_at = DateTimeField()
@@ -40,6 +46,12 @@ class Policy(base.TimestampedModel):
     level = IntegerField(default=1)
     policy_group = ForeignKeyField(policy_group.PolicyGroup, null=True, related_name='policies')
     rule_equation = ForeignKeyField(rule_equation.RuleEquation)
+
+    class Meta:
+        indexes = (
+            # only one major version of a policy can be present at once.
+            (('policy_id', 'version_major'), True)
+        )
 
     def save(self, *args, **kwargs):
         if self._get_pk_value() is None:

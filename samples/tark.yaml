@@ -1,7 +1,8 @@
-app_id: SampleApp
-db_name: tark
-db_node: localhost
-db_password: treebo
-db_type: postgresql
-db_user: treebo
+app_id: DefaultApp
+db_settings:
+  db_name: tark
+  db_node: localhost
+  db_password: ''
+  db_type: postgresql
+  db_user: root
 import_paths: .
