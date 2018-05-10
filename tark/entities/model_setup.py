@@ -24,7 +24,7 @@ def init_database(db_settings, app_name="default"):
     if not db_handler:
         raise KeyError("Invalid db type: {}".format(db_settings.db_type))
 
-    db = db_handler(db_settings.db_name, db_settings.db_configuration)
+    db = db_handler(db_settings.db_name, **db_settings.db_configuration)
 
     for model in models_list:
         model._meta.database = db

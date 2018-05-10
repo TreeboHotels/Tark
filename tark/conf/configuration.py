@@ -45,7 +45,7 @@ class Configuration(object):
         self.app_id = constants.DEFAULT_APP_ID
         self.import_paths = constants.DEFAULT_IMPORT_PATHS
         self.config_file = constants.DEFAULT_CONFIG_FILE_PATH
-        self.db_setting = DBSettings()
+        self.db_settings = DBSettings()
         update_import_paths(self.import_paths)
 
     def set_config(self, **kwargs):
@@ -65,7 +65,7 @@ class Configuration(object):
             self.config_file = kwargs['config_file']
 
         if 'db_settings' in kwargs:
-            self.db_settings = DBSettings(kwargs['db_settings'])
+            self.db_settings = DBSettings(**kwargs['db_settings'])
 
     def load_from_file(self, file_path):
         logger = logging.getLogger(self.__class__.__name__)
@@ -84,7 +84,7 @@ class Configuration(object):
         conf_dict = {
             "app_id": self.app_id,
             "import_paths": self.import_paths,
-            "db_settings": self.db_setting.get_settings(),
+            "db_settings": self.db_settings.get_settings(),
         }
 
         try:

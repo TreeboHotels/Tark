@@ -8,7 +8,7 @@ class EquationBuilder(object):
 
     def __init__(self, rule_mappings=None):
         rule_map = dict()
-        if rule_map is not None:
+        if rule_mappings is not None:
             for rule_map_entry in rule_mappings:
                 rule_obj = rule_map_entry.rule
                 rule_map[rule_obj.name] = rule_obj

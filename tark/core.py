@@ -16,7 +16,7 @@ class Tark(object):
 
         self.config = Configuration(config_file=config_path)
 
-        self.config.db = init_database(self.config.db_setting, self.config.app_id)
+        self.config.db = init_database(self.config.db_settings, self.config.app_id)
 
         self.operators = operator_manager.OperatorManager()
         self.engine = policy_engine.PolicyEngine()

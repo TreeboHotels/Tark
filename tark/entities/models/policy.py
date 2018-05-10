@@ -50,7 +50,7 @@ class Policy(base.TimestampedModel):
     class Meta:
         indexes = (
             # only one major version of a policy can be present at once.
-            (('policy_id', 'version_major'), True)
+            (('policy_id', 'version_major'), True),
         )
 
     def save(self, *args, **kwargs):

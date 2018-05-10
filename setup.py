@@ -19,7 +19,8 @@ setup(
     install_requires=[
         'click>=3.0.0',
         'peewee',
-        'PyYaml'
+        'PyYaml',
+        'psycopg2'
     ],
     url='',
     license='BSD',
