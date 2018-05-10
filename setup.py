@@ -18,7 +18,8 @@ setup(
     packages=find_packages(exclude=['tests', 'samples']),
     install_requires=[
         'click>=3.0.0',
-        'peewee'
+        'peewee',
+        'PyYaml'
     ],
     url='',
     license='BSD',
